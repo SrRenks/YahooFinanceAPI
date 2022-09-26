@@ -18,7 +18,7 @@ Initially, it is necessary to instantiate our variable that will receive the **Y
 | interval  | str         |
 | range     | str         |
 
-* **ticker**: It is the code referring to the stock, pay attention to the **suffix** (if any), in some countries (eg Brazil) the actions end with the suffix ".SA" after the code.
+* **ticker**: It is the code referring to the stock, pay attention to the **suffix** (if any), Example: many Brazilian stocks end with the suffix ".SA", it is recommended to check whether or not the stock you are looking for has a suffix directly on the **Yahoo Finance website**.
 * **interval**: It is the **time interval** of how you want the data referring to the "range" attribute. Examples: 1m, 2m, 5m, 15m, 30m, 60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo.
 * **range**: It is the scale of capture, which can be days, months or years. Examples: 1d, 2d, 5d, 1mo, 2mo, 3mo, 6mo, 1y, 2y, 5y, 10y, ytd, max.
 
@@ -184,6 +184,7 @@ google_data = YahooFinance('GOOG', '1d', '1d')
 google_low = google_data.low()
 ```
 
+
 > **Note**: if you instantiate the **YahooFinance** class using a **list** of tickers for the "ticker" attribute, a **loading bar** will be shown referring to the amount of tickers present in the list.
 
 ## volume
@@ -202,5 +203,6 @@ from yfinance import YahooFinance
 google_data = YahooFinance('GOOG', '1d', '1d')
 google_volume = google_data.volume()
 ```
+
 
 > **Note**: if you instantiate the **YahooFinance** class using a **list** of tickers for the "ticker" attribute, a **loading bar** will be shown referring to the amount of tickers present in the list.
