@@ -15,24 +15,24 @@ def info(zip_args):
         del info['currentTradingPeriod']
         del info['validRanges']
         df = pd.DataFrame(info, index=[0])
-        df.insert(loc=0, column='ticker', value=ticker)
+        df.insert(loc=0, column='ticker', value=ticker.upper())
         return df
     else:
-        raise ValueError(f'Error with ticker "{ticker}": {info["chart"]["error"]["description"]}.')
+        raise ValueError(f'Error with ticker "{ticker.upper()}": {info["chart"]["error"]["description"]}.')
 
 
 def trading_period(zip_args):
     ticker, type, interval, range = list(zip_args)
-    if zip_args[1] not in ['pre', 'regular', 'post']:
+    if type not in ['pre', 'regular', 'post']:
         raise ValueError(f'Invalid type "{zip_args[1]}", valid types: "pre", "regular", "post"')
     data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{ticker.upper()}?interval={interval}&range={range}', headers=headers).json()
     if data['chart']['error'] is None:
         data = data['chart']['result'][0]['meta']['currentTradingPeriod'][type]
         data = pd.DataFrame(data, index=[0])
-        data.insert(loc=0, column='ticker', value=ticker)
+        data.insert(loc=0, column='ticker', value=ticker.upper())
         return data
     else:
-        raise ValueError(f'Error with ticker "{ticker}": {data["chart"]["error"]["description"]}.')
+        raise ValueError(f'Error with ticker "{ticker.upper()}": {data["chart"]["error"]["description"]}.')
 
 
 def all_values(zip_args):
@@ -44,85 +44,85 @@ def all_values(zip_args):
         time = pd.DataFrame(data=data['timestamp'], columns=['time'])
         time = time['time'].apply(lambda row: datetime.utcfromtimestamp(row).strftime('%d/%m/%Y %H:%M:%S'))
         df.insert(loc=0, column='time', value=time)
-        df.insert(loc=0, column='ticker', value=ticker)
+        df.insert(loc=0, column='ticker', value=ticker.upper())
         return df
     else:
-        raise ValueError(f'Error with ticker "{ticker}": {data["chart"]["error"]["description"]}.')
+        raise ValueError(f'Error with ticker "{ticker.upper()}": {data["chart"]["error"]["description"]}.')
 
 
 def close(zip_args):
     ticker, interval, range = list(zip_args)
-    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{ticker}?interval={interval}&range={range}', headers=headers).json()
+    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{ticker.upper()}?interval={interval}&range={range}', headers=headers).json()
     if data['chart']['error'] is None:
         data = data['chart']['result'][0]
         df = pd.DataFrame(data=data['indicators']['quote'][0]['close'], index=None, columns=['close'])
         time = pd.DataFrame(data=data['timestamp'], columns=['time'])
         time = time['time'].apply(lambda row: datetime.utcfromtimestamp(row).strftime('%d/%m/%Y %H:%M:%S'))
         df.insert(loc=0, column='time', value=time)
-        df.insert(loc=0, column='ticker', value=ticker)
+        df.insert(loc=0, column='ticker', value=ticker.upper())
         return df
     else:
-        raise ValueError(f'Error with ticker "{ticker}": {data["chart"]["error"]["description"]}.')
+        raise ValueError(f'Error with ticker "{ticker.upper()}": {data["chart"]["error"]["description"]}.')
 
 
 def open(zip_args):
     ticker, interval, range = list(zip_args)
-    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{ticker}?interval={interval}&range={range}', headers=headers).json()
+    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{ticker.upper()}?interval={interval}&range={range}', headers=headers).json()
     if data['chart']['error'] is None:
         data = data['chart']['result'][0]
         df = pd.DataFrame(data=data['indicators']['quote'][0]['open'], index=None, columns=['open'])
         time = pd.DataFrame(data=data['timestamp'], columns=['time'])
         time = time['time'].apply(lambda row: datetime.utcfromtimestamp(row).strftime('%d/%m/%Y %H:%M:%S'))
         df.insert(loc=0, column='time', value=time)
-        df.insert(loc=0, column='ticker', value=ticker)
+        df.insert(loc=0, column='ticker', value=ticker.upper())
         return df
     else:
-        raise ValueError(f'Error with ticker "{ticker}": {data["chart"]["error"]["description"]}.')
+        raise ValueError(f'Error with ticker "{ticker.upper()}": {data["chart"]["error"]["description"]}.')
 
 
 def high(zip_args):
     ticker, interval, range = list(zip_args)
-    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{ticker}?interval={interval}&range={range}', headers=headers).json()
+    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{ticker.upper()}?interval={interval}&range={range}', headers=headers).json()
     if data['chart']['error'] is None:
         data = data['chart']['result'][0]
         df = pd.DataFrame(data=data['indicators']['quote'][0]['high'], index=None, columns=['high'])
         time = pd.DataFrame(data=data['timestamp'], columns=['time'])
         time = time['time'].apply(lambda row: datetime.utcfromtimestamp(row).strftime('%d/%m/%Y %H:%M:%S'))
         df.insert(loc=0, column='time', value=time)
-        df.insert(loc=0, column='ticker', value=ticker)
+        df.insert(loc=0, column='ticker', value=ticker.upper())
         return df
     else:
-        raise ValueError(f'Error with ticker "{ticker}": {data["chart"]["error"]["description"]}.')
+        raise ValueError(f'Error with ticker "{ticker.upper()}": {data["chart"]["error"]["description"]}.')
 
 
 def low(zip_args):
     ticker, interval, range = list(zip_args)
-    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{ticker}?interval={interval}&range={range}', headers=headers).json()
+    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{ticker.upper()}?interval={interval}&range={range}', headers=headers).json()
     if data['chart']['error'] is None:
         data = data['chart']['result'][0]
         df = pd.DataFrame(data=data['indicators']['quote'][0]['low'], index=None, columns=['low'])
         time = pd.DataFrame(data=data['timestamp'], columns=['time'])
         time = time['time'].apply(lambda row: datetime.utcfromtimestamp(row).strftime('%d/%m/%Y %H:%M:%S'))
         df.insert(loc=0, column='time', value=time)
-        df.insert(loc=0, column='ticker', value=ticker)
+        df.insert(loc=0, column='ticker', value=ticker.upper())
         return df
     else:
-        raise ValueError(f'Error with ticker "{ticker}": {data["chart"]["error"]["description"]}.')
+        raise ValueError(f'Error with ticker "{ticker.upper()}": {data["chart"]["error"]["description"]}.')
 
 
 def volume(zip_args):
     ticker, interval, range = list(zip_args)
-    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{ticker}?interval={interval}&range={range}', headers=headers).json()
+    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{ticker.upper()}?interval={interval}&range={range}', headers=headers).json()
     if data['chart']['error'] is None:
         data = data['chart']['result'][0]
         df = pd.DataFrame(data=data['indicators']['quote'][0]['volume'], index=None, columns=['volume'])
         time = pd.DataFrame(data=data['timestamp'], columns=['time'])
         time = time['time'].apply(lambda row: datetime.utcfromtimestamp(row).strftime('%d/%m/%Y %H:%M:%S'))
         df.insert(loc=0, column='time', value=time)
-        df.insert(loc=0, column='ticker', value=ticker)
+        df.insert(loc=0, column='ticker', value=ticker.upper())
         return df
     else:
-        raise ValueError(f'Error with ticker "{ticker}": {data["chart"]["error"]["description"]}.')
+        raise ValueError(f'Error with ticker "{ticker.upper()}": {data["chart"]["error"]["description"]}.')
 
 
 class YahooFinance():
@@ -151,7 +151,7 @@ class YahooFinance():
 
     def trading_period(self, type):
         if isinstance(self.ticker, str):
-            return trading_period((self.ticker, type, self.interval, self.range))
+            return trading_period((self.ticker, type.lower(), self.interval, self.range))
         if isinstance(self.ticker, list):
             dataframes = []
             with Pool() as pool:
