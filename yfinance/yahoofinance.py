@@ -1,9 +1,10 @@
-from multiprocessing import Pool
+from multiprocessing import Pool, freeze_support
 from datetime import datetime
 from itertools import repeat
 from tqdm import tqdm
 import pandas as pd
 import requests
+import os
 
 headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'}
 
@@ -225,3 +226,7 @@ class YahooFinance():
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
             return data.reset_index(drop=True)
+
+if __name__ != '__main__':
+    if os.name == 'nt':
+        freeze_support()
