@@ -18,21 +18,21 @@ def info(zip_args):
         df.insert(loc=0, column='ticker', value=ticker)
         return df
     else:
-        raise ValueError(f'Error with ticker "{zip_args[0]}": {info["chart"]["error"]["description"]}.')
+        raise ValueError(f'Error with ticker "{ticker}": {info["chart"]["error"]["description"]}.')
 
 
 def trading_period(zip_args):
     ticker, type, interval, range = list(zip_args)
     if zip_args[1] not in ['pre', 'regular', 'post']:
         raise ValueError(f'Invalid type "{zip_args[1]}", valid types: "pre", "regular", "post"')
-    trading_period = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{ticker.upper()}?interval={interval}&range={range}', headers=headers).json()
-    if trading_period['chart']['error'] is None:
-        trading_period = trading_period['chart']['result'][0]['meta']['currentTradingPeriod'][type]
-        trading_period = pd.DataFrame(trading_period, index=[0])
-        trading_period.insert(loc=0, column='ticker', value=ticker)
-        return trading_period
+    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{ticker.upper()}?interval={interval}&range={range}', headers=headers).json()
+    if data['chart']['error'] is None:
+        data = data['chart']['result'][0]['meta']['currentTradingPeriod'][type]
+        data = pd.DataFrame(data, index=[0])
+        data.insert(loc=0, column='ticker', value=ticker)
+        return data
     else:
-        raise ValueError(f'Error with ticker "{ticker}": {trading_period["chart"]["error"]["description"]}.')
+        raise ValueError(f'Error with ticker "{ticker}": {data["chart"]["error"]["description"]}.')
 
 
 def all_values(zip_args):
@@ -144,7 +144,7 @@ class YahooFinance():
         elif isinstance(self.ticker, list):
             dataframes = []
             with Pool() as pool:
-                for dataframe in tqdm(pool.imap_unordered(info, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker)):
+                for dataframe in tqdm(pool.imap_unordered(info, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
             return data.reset_index(drop=True)
@@ -155,7 +155,7 @@ class YahooFinance():
         if isinstance(self.ticker, list):
             dataframes = []
             with Pool() as pool:
-                for dataframe in tqdm(pool.imap_unordered(trading_period, zip(self.ticker, repeat(type), repeat(self.interval), repeat(self.range))), total=len(self.ticker)):
+                for dataframe in tqdm(pool.imap_unordered(trading_period, zip(self.ticker, repeat(type), repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
             return data.reset_index(drop=True)
@@ -166,7 +166,7 @@ class YahooFinance():
         elif isinstance(self.ticker, list):
             dataframes = []
             with Pool() as pool:
-                for dataframe in tqdm(pool.imap_unordered(all_values, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker)):
+                for dataframe in tqdm(pool.imap_unordered(all_values, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
             return data.reset_index(drop=True)
@@ -177,7 +177,7 @@ class YahooFinance():
         elif isinstance(self.ticker, list):
             dataframes = []
             with Pool() as pool:
-                for dataframe in tqdm(pool.imap_unordered(close, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker)):
+                for dataframe in tqdm(pool.imap_unordered(close, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
             return data.reset_index(drop=True)
@@ -188,7 +188,7 @@ class YahooFinance():
         elif isinstance(self.ticker, list):
             dataframes = []
             with Pool() as pool:
-                for dataframe in tqdm(pool.imap_unordered(open, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker)):
+                for dataframe in tqdm(pool.imap_unordered(open, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
             return data.reset_index(drop=True)
@@ -199,7 +199,7 @@ class YahooFinance():
         elif isinstance(self.ticker, list):
             dataframes = []
             with Pool() as pool:
-                for dataframe in tqdm(pool.imap_unordered(high, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker)):
+                for dataframe in tqdm(pool.imap_unordered(high, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
             return data.reset_index(drop=True)
@@ -210,7 +210,7 @@ class YahooFinance():
         elif isinstance(self.ticker, list):
             dataframes = []
             with Pool() as pool:
-                for dataframe in tqdm(pool.imap_unordered(low, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker)):
+                for dataframe in tqdm(pool.imap_unordered(low, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
             return data.reset_index(drop=True)
@@ -221,7 +221,7 @@ class YahooFinance():
         elif isinstance(self.ticker, list):
             dataframes = []
             with Pool() as pool:
-                for dataframe in tqdm(pool.imap_unordered(volume, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker)):
+                for dataframe in tqdm(pool.imap_unordered(volume, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
             return data.reset_index(drop=True)
