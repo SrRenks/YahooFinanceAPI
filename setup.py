@@ -39,6 +39,6 @@ url='https://github.com/SrRenks/yfinance',
 
 packages=['yfinance'],
 # List project dependencies: 
-install_requires=['pandas', 'requests', 'tqdm'],
+install_requires=['pandas', 'requests', 'tqdm', 'wheel'],
 
 )
