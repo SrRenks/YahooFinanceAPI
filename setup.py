@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup
 import os
 
 # Optional project description in README.md:
@@ -6,7 +6,7 @@ current_directory = os.path.dirname(os.path.abspath(__file__))
 
 try:
     with open(os.path.join(current_directory, 'README.md'), encoding='utf-8') as f:
-        long_description = f.read()
+        README = f.read()
 except Exception:
     long_description = ''
 setup(
@@ -24,9 +24,9 @@ setup(
     description='An unofficial library to capture data from Yahoo Finance in an easier way. Having access to capture data from various actions provided by the service.',
 
     # Long description of your library:
-    long_description=long_description,
+    long_description_content_type="text/markdown",
 
-    long_description_content_type='text/markdown',
+    long_description=README,
 
     # Your name:
     author='Ricardo Castro',
