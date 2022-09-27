@@ -220,3 +220,17 @@ If you have already captured some data using the methods mentioned above, you ca
 It is recommended to insert the suffix "**.csv**", however if it does not exist, it will be inserted at the end of the string received by this argument.
 
 * **sep**: It is the **separator/delimiter** used in this worksheet **.csv**, by **default** it is set to "**;**", but you can change it to any other. For example a **comma** ("**,**").
+
+## to_excel
+
+If you have already captured some data using the methods mentioned above, you can export it to a **.csv** spreadsheet.
+
+| Arg            | Type     |
+| -------------- | -------- |
+| dir (optional) | **str**  |
+
+* **dir**: The **path** where you want your .xlsx file to be saved, by **default** is set to the **current folder** where the script is running and named "**database.xlsx**", which is also changeable. Your .csv will be saved in the given path, for example:
+
+"my_stock_databases/stock_name.xlsx".
+
+It is recommended to insert the suffix "**.xlsx**", however if it does not exist, it will be inserted at the end of the string received by this argument.
