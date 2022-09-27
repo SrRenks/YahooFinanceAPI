@@ -1,0 +1,2 @@
+class NothingToExport(Exception):
+    pass

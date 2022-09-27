@@ -9,7 +9,7 @@ with open(os.path.join(current_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='yfapi',
-    version='1.2',
+    version='1.4',
     license='MIT',
     description='An unofficial library to capture data from Yahoo Finance API in an easier way. Having access to capture data from various actions provided by the service.',
     long_description_content_type="text/markdown",
@@ -18,5 +18,5 @@ setup(
     author_email='srrenks@gmail.com',
     url='https://github.com/SrRenks/YahoofinanceAPI',
     packages=['yfapi'],
-    install_requires=['pandas', 'requests', 'tqdm'],
+    install_requires=['pandas', 'requests', 'tqdm', 'openpyxl'],
 )

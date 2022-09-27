@@ -203,3 +203,20 @@ google_data = YahooFinance('GOOG', '1d', '1d')
 google_volume = google_data.volume()
 ```
 > **Note**: if you instantiate the **YahooFinance** class using a **list** of tickers for the "ticker" attribute, a **loading bar** will be shown referring to the amount of tickers present in the list.
+
+## to_csv
+
+If you have already captured some data using the methods mentioned above, you can export it to a **.csv** spreadsheet.
+
+| Arg            | Type     |
+| -------------- | -------- |
+| dir (optional) | **str**  |
+| sep (optional) | **str**  |
+
+* **dir**: The **path** where you want your .csv file to be saved, by **default** is set to the **current folder** where the script is running and named "**database.csv**", which is also changeable. Your .csv will be saved in the given path, for example:
+
+"my_stock_databases/stock_name.csv".
+
+It is recommended to insert the suffix "**.csv**", however if it does not exist, it will be inserted at the end of the string received by this argument.
+
+* **sep**: It is the **separator/delimiter** used in this worksheet **.csv**, by **default** it is set to "**;**", but you can change it to any other. For example a **comma** ("**,**").
