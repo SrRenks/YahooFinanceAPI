@@ -223,7 +223,7 @@ It is recommended to insert the suffix "**.csv**", however if it does not exist,
 
 ## to_excel
 
-If you have already captured some data using the methods mentioned above, you can export it to a **.csv** spreadsheet.
+If you have already captured some data using the methods mentioned above, you can export it to a **.xlsx** spreadsheet.
 
 | Arg            | Type     |
 | -------------- | -------- |
