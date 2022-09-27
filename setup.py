@@ -39,6 +39,6 @@ setup(
 
     packages=['yfinance'],
     # List project dependencies:
-    install_requires=['pandas', 'requests', 'tqdm', 'wheel'],
+    install_requires=['pandas', 'requests', 'tqdm'],
 
 )
