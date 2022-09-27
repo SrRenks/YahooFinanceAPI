@@ -1,5 +1,4 @@
 from distutils.core import setup
-from setuptools import find_packages
 import os
 
 # Optional project description in README.md:
@@ -12,33 +11,34 @@ except Exception:
     long_description = ''
 setup(
 
-# Project name: 
-name='yfinance',
+    # Project name:
+    name='yfapi',
 
-# Project version number:
-version='1.0',
+    # Project version number:
+    version='1.0',
 
-# List a license for the project, eg. MIT License
-license='MIT',
+    # List a license for the project, eg. MIT License
+    license='MIT',
 
-# Short description of your library: 
-description='An unofficial library to capture data from Yahoo Finance in an easier way. Having access to capture data from various actions provided by the service.',
+    # Short description of your library:
+    description='An unofficial library to capture data from Yahoo Finance in an easier way. Having access to capture data from various actions provided by the service.',
 
-# Long description of your library: 
-long_description=long_description,
-long_description_content_type='text/markdown',
+    # Long description of your library:
+    long_description=long_description,
 
-# Your name: 
-author='Ricardo Castro',
+    long_description_content_type='text/markdown',
 
-# Your email address:
-author_email='srrenks@gmail.com',
+    # Your name:
+    author='Ricardo Castro',
 
-# Link to your github repository or website: 
-url='https://github.com/SrRenks/yfinance',
+    # Your email address:
+    author_email='srrenks@gmail.com',
 
-packages=['yfinance'],
-# List project dependencies: 
-install_requires=['pandas', 'requests', 'tqdm', 'wheel'],
+    # Link to your github repository or website:
+    url='https://github.com/SrRenks/yfinance',
+
+    packages=['yfinance'],
+    # List project dependencies:
+    install_requires=['pandas', 'requests', 'tqdm', 'wheel'],
 
 )
