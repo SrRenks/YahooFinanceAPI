@@ -1,7 +1,7 @@
 
-# Welcome to YFinance
+# Welcome to YahooFinanceAPI
 
-An unofficial library to capture data from Yahoo Finance in an easier way. Having access to capture data from various actions provided by the service. It is possible to configure your capture to select and filter different types of data regarding the stocks provided.
+An unofficial library to capture data from Yahoo Finance API in an easier way. Having access to capture data from various actions provided by the service. It is possible to configure your capture to select and filter different types of data regarding the stocks provided.
 
 # First Steps
 
@@ -9,12 +9,12 @@ initially, install the package through the following command in your terminal:
 ```
 pip install yfapi
 ```
-> **Note:** For those more familiarized and who choose to keep the packages in a venv environment, you can use the command **python -m venv yfinance**.
+> **Note:** For those more familiarized and who choose to keep the packages in a venv environment, you can use the command **python -m venv yfapi**.
 # Warnings
 
 If you are running your code on **Windows**, it is extremely important that you consider indenting your code as in the following example:
 ```
-from yfinance import YahooFinance
+from yfapi import YahooFinance
 
 if __name__ == '__main__':
 	# directly run your code that uses the
@@ -22,7 +22,7 @@ if __name__ == '__main__':
 ```
 Then we would use it as follows:
 ```
-from yfinance import YahooFinance
+from yfapi import YahooFinance
 
 if __name__ == '__main__':
 	stock_data = YahooFinance('STOCK_TICKER', '1d', '1d')
@@ -44,7 +44,7 @@ Initially, it is necessary to instantiate our variable that will receive the **Y
 
 For that, just use the method like this example code:
 ```
-from yfinance import YahooFinance
+from yfapi import YahooFinance
 
 google_data = YahooFinance('GOOG', '1d', '1d')
 ```
@@ -70,7 +70,7 @@ Returns a **Pandas DataFrame**, with the following values referring to stock:
 
 For that, just use the method like this example code:
 ```
-from yfinance import YahooFinance
+from yfapi import YahooFinance
 
 
 google_data = YahooFinance('GOOG', '1d', '1d')
@@ -92,7 +92,7 @@ it is necessary to insert the argument referring to which **type** of period you
 | type | **str**  |
 For that, just use the method like this example code:
 ```
-from yfinance import YahooFinance
+from yfapi import YahooFinance
 
 
 google_data = YahooFinance('GOOG', '1d', '1d')
@@ -113,7 +113,7 @@ Returns a **Pandas DataFrame** with the following data:
 
 For that, just use the method like this example code:
 ```
-from yfinance import YahooFinance
+from yfapi import YahooFinance
 
 google_data = YahooFinance('GOOG', '1d', '1d')
 google_values = google_data.all_values()
@@ -132,7 +132,7 @@ For that, just use the method like this example code:
   
 
 ```
-from yfinance import YahooFinance
+from yfapi import YahooFinance
 
 
 google_data = YahooFinance('GOOG', '1d', '1d')
@@ -149,7 +149,7 @@ Returns a **Pandas DataFrame** with the following data:
 
 For that, just use the method like this example code:
 ```
-from yfinance import YahooFinance
+from yfapi import YahooFinance
 
 
 google_data = YahooFinance('GOOG', '1d', '1d')
@@ -165,7 +165,7 @@ Returns a **Pandas DataFrame** with the following data:
 
 For that, just use the method like this example code:
 ```
-from yfinance import YahooFinance
+from yfapi import YahooFinance
 
 google_data = YahooFinance('GOOG', '1d', '1d')
 google_high = google_data.high()
@@ -181,7 +181,7 @@ Returns a **Pandas DataFrame** with the following data:
 
 For that, just use the method like this example code:
 ```
-from yfinance import YahooFinance
+from yfapi import YahooFinance
 
 google_data = YahooFinance('GOOG', '1d', '1d')
 google_low = google_data.low()
@@ -197,7 +197,7 @@ Returns a **Pandas DataFrame** with the following data:
 
 For that, just use the method like this example code:
 ```
-from yfinance import YahooFinance
+from yfapi import YahooFinance
 
 google_data = YahooFinance('GOOG', '1d', '1d')
 google_volume = google_data.volume()
