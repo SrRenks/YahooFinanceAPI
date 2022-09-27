@@ -229,7 +229,7 @@ If you have already captured some data using the methods mentioned above, you ca
 | -------------- | -------- |
 | dir (optional) | **str**  |
 
-* **dir**: The **path** where you want your .xlsx file to be saved, by **default** is set to the **current folder** where the script is running and named "**database.xlsx**", which is also changeable. Your .csv will be saved in the given path, for example:
+* **dir**: The **path** where you want your .xlsx file to be saved, by **default** is set to the **current folder** where the script is running and named "**database.xlsx**", which is also changeable. Your .xlsx will be saved in the given path, for example:
 
 "my_stock_databases/stock_name.xlsx".
 
