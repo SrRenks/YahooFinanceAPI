@@ -9,9 +9,9 @@ with open(os.path.join(current_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='yfapi',
-    version='1.5.3',
+    version='1.5.4',
     license='MIT',
-    description='An unofficial library to capture data from Yahoo Finance API in an easier way. Having access to capture data from various actions provided by the service.',
+    description='An unofficial library to capture data from Yahoo Finance API in an easier way. Having access to capture data from various stocks provided by the service.',
     long_description_content_type="text/markdown",
     long_description=README,
     author='Ricardo Castro',

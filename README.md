@@ -2,7 +2,7 @@
 
 # Welcome to YahooFinanceAPI
 
-An unofficial library to capture data from Yahoo Finance API in an easier way. Having access to capture data from various actions provided by the service. It is possible to configure your capture to select and filter different types of data regarding the stocks provided.
+An unofficial library to capture data from Yahoo Finance API in an easier way. Having access to capture data from some stocks provided by the service. It is possible to configure your capture to select and filter different types of data regarding the stocks provided.
 
 # First Steps
 
