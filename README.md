@@ -1,4 +1,5 @@
 
+
 # Welcome to YahooFinanceAPI
 
 An unofficial library to capture data from Yahoo Finance API in an easier way. Having access to capture data from various actions provided by the service. It is possible to configure your capture to select and filter different types of data regarding the stocks provided.
@@ -42,12 +43,21 @@ Initially, it is necessary to instantiate our variable that will receive the **Y
 
 * **range**: It is the scale of capture, which can be days, months or years. Examples: 1d, 2d, 5d, 1mo, 2mo, 3mo, 6mo, 1y, 2y, 5y, 10y, ytd, max.
 
-For that, just use the method like this example code:
+for that, instantiate as in this example code:
 ```
 from yfapi import YahooFinance
 
 google_data = YahooFinance('GOOG', '1d', '1d')
 ```
+remember, if you are running the code on **Windows** you should run such functions like this:
+```
+from yfapi import YahooFinance
+
+if __name__ == '__main__':
+	google_data = YahooFinance('GOOG', '1d', '1d')
+```
+> **Note**: if you instantiate the **YahooFinance** class using a **list** of tickers for the "ticker" attribute, a **loading bar** will be shown referring to the amount of tickers present in the list.
+
 ## info
 Returns a **Pandas DataFrame**, with the following values referring to stock:
 * chartPreviousClose
@@ -76,7 +86,6 @@ from yfapi import YahooFinance
 google_data = YahooFinance('GOOG', '1d', '1d')
 google_info = google_data.info()
 ```
-> **Note**: if you instantiate the **YahooFinance** class using a **list** of tickers for the "ticker" attribute, a **loading bar** will be shown referring to the amount of tickers present in the list.
 
 ## trading_period
 
@@ -87,9 +96,11 @@ Returns a **Pandas DataFrame** with the following data:
 * gmtoffset
 
 it is necessary to insert the argument referring to which **type** of period you are looking for, being possible to capture "**pre**", "**regular**" and "**post**".
+
 | Arg  | Type     |
 | ---- | -------- |
 | type | **str**  |
+
 For that, just use the method like this example code:
 ```
 from yfapi import YahooFinance
@@ -98,7 +109,6 @@ from yfapi import YahooFinance
 google_data = YahooFinance('GOOG', '1d', '1d')
 google_trading_period = google_data.trading_period("regular")
 ```
-> **Note**: if you instantiate the **YahooFinance** class using a **list** of tickers for the "ticker" attribute, a **loading bar** will be shown referring to the amount of tickers present in the list.
 
 ## all_values
 
@@ -118,7 +128,6 @@ from yfapi import YahooFinance
 google_data = YahooFinance('GOOG', '1d', '1d')
 google_values = google_data.all_values()
 ```
-> **Note**: if you instantiate the **YahooFinance** class using a **list** of tickers for the "ticker" attribute, a **loading bar** will be shown referring to the amount of tickers present in the list.
 
 ## close
 
@@ -129,8 +138,6 @@ Returns a **Pandas DataFrame** with the following data:
 
 For that, just use the method like this example code:
 
-  
-
 ```
 from yfapi import YahooFinance
 
@@ -138,7 +145,6 @@ from yfapi import YahooFinance
 google_data = YahooFinance('GOOG', '1d', '1d')
 google_close = google_data.close()
 ```
-> **Note**: if you instantiate the **YahooFinance** class using a **list** of tickers for the "ticker" attribute, a **loading bar** will be shown referring to the amount of tickers present in the list.
 
 ## open
 
@@ -155,7 +161,6 @@ from yfapi import YahooFinance
 google_data = YahooFinance('GOOG', '1d', '1d')
 google_open = google_data.open()
 ```
-> **Note**: if you instantiate the **YahooFinance** class using a **list** of tickers for the "ticker" attribute, a **loading bar** will be shown referring to the amount of tickers present in the list.
 
 ## high
 Returns a **Pandas DataFrame** with the following data:
@@ -170,7 +175,6 @@ from yfapi import YahooFinance
 google_data = YahooFinance('GOOG', '1d', '1d')
 google_high = google_data.high()
 ```
-> **Note**: if you instantiate the **YahooFinance** class using a **list** of tickers for the "ticker" attribute, a **loading bar** will be shown referring to the amount of tickers present in the list.
 
 ## low
 
@@ -186,7 +190,6 @@ from yfapi import YahooFinance
 google_data = YahooFinance('GOOG', '1d', '1d')
 google_low = google_data.low()
 ```
-> **Note**: if you instantiate the **YahooFinance** class using a **list** of tickers for the "ticker" attribute, a **loading bar** will be shown referring to the amount of tickers present in the list.
 
 ## volume
 
@@ -202,7 +205,6 @@ from yfapi import YahooFinance
 google_data = YahooFinance('GOOG', '1d', '1d')
 google_volume = google_data.volume()
 ```
-> **Note**: if you instantiate the **YahooFinance** class using a **list** of tickers for the "ticker" attribute, a **loading bar** will be shown referring to the amount of tickers present in the list.
 
 ## to_csv
 
@@ -214,13 +216,20 @@ If you have already captured some data using the methods mentioned above, you ca
 | sep (optional) | **str**  |
 
 * **dir**: The **path** where you want your .csv file to be saved, by **default** is set to the **current folder** where the script is running and named "**database.csv**", which is also changeable. Your .csv will be saved in the given path, for example:
-
-"my_stock_databases/stock_name.csv".
-
+"**my_stock_databases/stock_name.csv**".
 It is recommended to insert the suffix "**.csv**", however if it does not exist, it will be inserted at the end of the string received by this argument.
 
 * **sep**: It is the **separator/delimiter** used in this worksheet **.csv**, by **default** it is set to "**;**", but you can change it to any other. For example a **comma** ("**,**").
 
+For that, just use the method like this example code:
+```
+from yfapi import YahooFinance
+
+google_data = YahooFinance('GOOG', '1d', '1d')
+google_data = google_data.all_values()
+google_data.to_csv("google_database.csv", sep=",")
+```
+>**Note**: If you haven't captured any data, an error will be returned stating this.
 ## to_excel
 
 If you have already captured some data using the methods mentioned above, you can export it to a **.xlsx** spreadsheet.
@@ -230,7 +239,13 @@ If you have already captured some data using the methods mentioned above, you ca
 | dir (optional) | **str**  |
 
 * **dir**: The **path** where you want your .xlsx file to be saved, by **default** is set to the **current folder** where the script is running and named "**database.xlsx**", which is also changeable. Your .xlsx will be saved in the given path, for example:
-
-"my_stock_databases/stock_name.xlsx".
-
+"**my_stock_databases/stock_name.xlsx**".
 It is recommended to insert the suffix "**.xlsx**", however if it does not exist, it will be inserted at the end of the string received by this argument.
+```
+from yfapi import YahooFinance
+
+google_data = YahooFinance('GOOG', '1d', '1d')
+google_data = google_data.all_values()
+google_data.to_excel("google_database.xlsx")
+```
+>**Note**: If you haven't captured any data, an error will be returned stating this.
