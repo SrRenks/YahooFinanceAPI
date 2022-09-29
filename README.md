@@ -61,6 +61,8 @@ if __name__ == '__main__':
 
 ## info
 Returns a **Pandas DataFrame**, with the following values referring to stock:
+
+* ticker
 * chartPreviousClose
 * currency
 * currentTradingPeriod
@@ -76,7 +78,6 @@ Returns a **Pandas DataFrame**, with the following values referring to stock:
 * regularMarketPrice
 * regularMarketTime
 * scale
-* symbol
 * timezone
 
 For that, just use the method like this example code:

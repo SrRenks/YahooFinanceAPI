@@ -13,7 +13,8 @@ headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 def get_suffix(ticker):
     params = {'q': ticker, 'quotesCount': 1, 'newsCount': 0}
     try:
-        data = requests.get("https://query2.finance.yahoo.com/v1/finance/search", params=params, headers=headers).json()['quotes'][0]['symbol']
+        data = requests.get("https://query2.finance.yahoo.com/v1/finance/search",
+                            params=params, headers=headers).json()['quotes'][0]['symbol']
     except Exception as e:
         raise TickerNotFound(f"{ticker}: {e}")
     return data
@@ -21,7 +22,8 @@ def get_suffix(ticker):
 
 def info(zip_args):
     ticker, interval, range = list(zip_args)
-    info = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{get_suffix(ticker)}?interval={interval}&range={range}', headers=headers).json()
+    info = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{get_suffix(ticker)}?interval={interval}&range={range}',
+                        headers=headers).json()
     if info['chart']['error'] is None:
         info = info['chart']['result'][0]['meta']
         del info['currentTradingPeriod']
@@ -38,7 +40,8 @@ def trading_period(zip_args):
     ticker, type, interval, range = list(zip_args)
     if type not in ['pre', 'regular', 'post']:
         raise ValueError(f'Invalid type "{zip_args[1]}", valid types: "pre", "regular", "post"')
-    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{get_suffix(ticker)}?interval={interval}&range={range}', headers=headers).json()
+    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{get_suffix(ticker)}?interval={interval}&range={range}',
+                        headers=headers).json()
     if data['chart']['error'] is None:
         data = data['chart']['result'][0]['meta']['currentTradingPeriod'][type]
         data = pd.DataFrame(data, index=[0])
@@ -50,13 +53,14 @@ def trading_period(zip_args):
 
 def all_values(zip_args):
     ticker, interval, range = list(zip_args)
-    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{get_suffix(ticker)}?interval={interval}&range={range}', headers=headers).json()
+    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{get_suffix(ticker)}?interval={interval}&range={range}',
+                        headers=headers).json()
     if data['chart']['error'] is None:
         data = data['chart']['result'][0]
         df = pd.DataFrame(data=data['indicators']['quote'][0])
         time = pd.DataFrame(data=data['timestamp'], columns=['time'])
         time = time['time'].apply(lambda row: datetime.utcfromtimestamp(row).strftime('%d/%m/%Y %H:%M:%S'))
-        df.insert(loc=0, column='time', value=time)
+        df.insert(loc=0, column='date', value=time)
         df.insert(loc=0, column='ticker', value=ticker.upper())
         return df
     else:
@@ -65,13 +69,15 @@ def all_values(zip_args):
 
 def close(zip_args):
     ticker, interval, range = list(zip_args)
-    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{get_suffix(ticker)}?interval={interval}&range={range}', headers=headers).json()
+    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{get_suffix(ticker)}?interval={interval}&range={range}',
+                        headers=headers).json()
     if data['chart']['error'] is None:
         data = data['chart']['result'][0]
-        df = pd.DataFrame(data=data['indicators']['quote'][0]['close'], index=None, columns=['close'])
+        df = pd.DataFrame(data=data['indicators']['quote']
+                          [0]['close'], index=None, columns=['close'])
         time = pd.DataFrame(data=data['timestamp'], columns=['time'])
         time = time['time'].apply(lambda row: datetime.utcfromtimestamp(row).strftime('%d/%m/%Y %H:%M:%S'))
-        df.insert(loc=0, column='time', value=time)
+        df.insert(loc=0, column='date', value=time)
         df.insert(loc=0, column='ticker', value=ticker.upper())
         return df
     else:
@@ -80,13 +86,15 @@ def close(zip_args):
 
 def open(zip_args):
     ticker, interval, range = list(zip_args)
-    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{get_suffix(ticker)}?interval={interval}&range={range}', headers=headers).json()
+    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{get_suffix(ticker)}?interval={interval}&range={range}',
+                        headers=headers).json()
     if data['chart']['error'] is None:
         data = data['chart']['result'][0]
-        df = pd.DataFrame(data=data['indicators']['quote'][0]['open'], index=None, columns=['open'])
+        df = pd.DataFrame(data=data['indicators']['quote']
+                          [0]['open'], index=None, columns=['open'])
         time = pd.DataFrame(data=data['timestamp'], columns=['time'])
         time = time['time'].apply(lambda row: datetime.utcfromtimestamp(row).strftime('%d/%m/%Y %H:%M:%S'))
-        df.insert(loc=0, column='time', value=time)
+        df.insert(loc=0, column='date', value=time)
         df.insert(loc=0, column='ticker', value=ticker.upper())
         return df
     else:
@@ -95,13 +103,15 @@ def open(zip_args):
 
 def high(zip_args):
     ticker, interval, range = list(zip_args)
-    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{get_suffix(ticker)}?interval={interval}&range={range}', headers=headers).json()
+    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{get_suffix(ticker)}?interval={interval}&range={range}',
+                        headers=headers).json()
     if data['chart']['error'] is None:
         data = data['chart']['result'][0]
-        df = pd.DataFrame(data=data['indicators']['quote'][0]['high'], index=None, columns=['high'])
+        df = pd.DataFrame(data=data['indicators']['quote']
+                          [0]['high'], index=None, columns=['high'])
         time = pd.DataFrame(data=data['timestamp'], columns=['time'])
         time = time['time'].apply(lambda row: datetime.utcfromtimestamp(row).strftime('%d/%m/%Y %H:%M:%S'))
-        df.insert(loc=0, column='time', value=time)
+        df.insert(loc=0, column='date', value=time)
         df.insert(loc=0, column='ticker', value=ticker.upper())
         return df
     else:
@@ -110,13 +120,15 @@ def high(zip_args):
 
 def low(zip_args):
     ticker, interval, range = list(zip_args)
-    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{get_suffix(ticker)}?interval={interval}&range={range}', headers=headers).json()
+    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{get_suffix(ticker)}?interval={interval}&range={range}',
+                        headers=headers).json()
     if data['chart']['error'] is None:
         data = data['chart']['result'][0]
-        df = pd.DataFrame(data=data['indicators']['quote'][0]['low'], index=None, columns=['low'])
+        df = pd.DataFrame(data=data['indicators']['quote']
+                          [0]['low'], index=None, columns=['low'])
         time = pd.DataFrame(data=data['timestamp'], columns=['time'])
         time = time['time'].apply(lambda row: datetime.utcfromtimestamp(row).strftime('%d/%m/%Y %H:%M:%S'))
-        df.insert(loc=0, column='time', value=time)
+        df.insert(loc=0, column='date', value=time)
         df.insert(loc=0, column='ticker', value=ticker.upper())
         return df
     else:
@@ -125,13 +137,15 @@ def low(zip_args):
 
 def volume(zip_args):
     ticker, interval, range = list(zip_args)
-    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{get_suffix(ticker)}?interval={interval}&range={range}', headers=headers).json()
+    data = requests.get(f'https://query1.finance.yahoo.com/v8/finance/chart/{get_suffix(ticker)}?interval={interval}&range={range}',
+                        headers=headers).json()
     if data['chart']['error'] is None:
         data = data['chart']['result'][0]
-        df = pd.DataFrame(data=data['indicators']['quote'][0]['volume'], index=None, columns=['volume'])
+        df = pd.DataFrame(data=data['indicators']['quote']
+                          [0]['volume'], index=None, columns=['volume'])
         time = pd.DataFrame(data=data['timestamp'], columns=['time'])
         time = time['time'].apply(lambda row: datetime.utcfromtimestamp(row).strftime('%d/%m/%Y %H:%M:%S'))
-        df.insert(loc=0, column='time', value=time)
+        df.insert(loc=0, column='date', value=time)
         df.insert(loc=0, column='ticker', value=ticker.upper())
         return df
     else:
@@ -160,10 +174,10 @@ class YahooFinance():
         elif isinstance(self.ticker, list):
             dataframes = []
             with Pool(cpu_count()) as pool:
-                for dataframe in tqdm(pool.imap_unordered(info, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False):
+                for dataframe in tqdm(pool.imap_unordered(info, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False, ascii=' ━', colour='GREEN'):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
-            data.reset_index(drop=True)
+            data = data.reset_index(drop=True)
             self.data = data
             return data
 
@@ -175,10 +189,10 @@ class YahooFinance():
         if isinstance(self.ticker, list):
             dataframes = []
             with Pool(cpu_count()) as pool:
-                for dataframe in tqdm(pool.imap_unordered(trading_period, zip(self.ticker, repeat(type), repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False):
+                for dataframe in tqdm(pool.imap_unordered(trading_period, zip(self.ticker, repeat(type), repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False, ascii=' ━', colour='GREEN'):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
-            data.reset_index(drop=True)
+            data = data.reset_index(drop=True)
             self.data = data
             return data
 
@@ -190,10 +204,10 @@ class YahooFinance():
         elif isinstance(self.ticker, list):
             dataframes = []
             with Pool(cpu_count()) as pool:
-                for dataframe in tqdm(pool.imap_unordered(all_values, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False):
+                for dataframe in tqdm(pool.imap_unordered(all_values, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False, ascii=' ━', colour='GREEN'):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
-            data.reset_index(drop=True)
+            data = data.reset_index(drop=True)
             self.data = data
             return data
 
@@ -205,10 +219,10 @@ class YahooFinance():
         elif isinstance(self.ticker, list):
             dataframes = []
             with Pool(cpu_count()) as pool:
-                for dataframe in tqdm(pool.imap_unordered(close, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False):
+                for dataframe in tqdm(pool.imap_unordered(close, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False, ascii=' ━', colour='GREEN'):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
-            data.reset_index(drop=True)
+            data = data.reset_index(drop=True)
             self.data = data
             return data
 
@@ -220,10 +234,10 @@ class YahooFinance():
         elif isinstance(self.ticker, list):
             dataframes = []
             with Pool(cpu_count()) as pool:
-                for dataframe in tqdm(pool.imap_unordered(open, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False):
+                for dataframe in tqdm(pool.imap_unordered(open, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False, ascii=' ━', colour='GREEN'):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
-            data.reset_index(drop=True)
+            data = data.reset_index(drop=True)
             self.data = data
             return data
 
@@ -235,7 +249,7 @@ class YahooFinance():
         elif isinstance(self.ticker, list):
             dataframes = []
             with Pool(cpu_count()) as pool:
-                for dataframe in tqdm(pool.imap_unordered(high, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False):
+                for dataframe in tqdm(pool.imap_unordered(high, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False, ascii=' ━', colour='GREEN'):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
             data = data.reset_index(drop=True)
@@ -250,7 +264,7 @@ class YahooFinance():
         elif isinstance(self.ticker, list):
             dataframes = []
             with Pool(cpu_count()) as pool:
-                for dataframe in tqdm(pool.imap_unordered(low, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False):
+                for dataframe in tqdm(pool.imap_unordered(low, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False, ascii=' ━', colour='GREEN'):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
             data = data.reset_index(drop=True)
@@ -265,13 +279,13 @@ class YahooFinance():
         elif isinstance(self.ticker, list):
             dataframes = []
             with Pool(cpu_count()) as pool:
-                for dataframe in tqdm(pool.imap_unordered(volume, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False):
+                for dataframe in tqdm(pool.imap_unordered(volume, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False, ascii=' ━', colour='GREEN'):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
-            data.reset_index(drop=True)
+            data = data.reset_index(drop=True)
             self.data = data
             return data
-    
+
     def to_csv(self, dir='database.csv', sep=';'):
         if isinstance(self.data, pd.DataFrame):
             if dir != 'database.csv':
