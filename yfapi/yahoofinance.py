@@ -161,148 +161,148 @@ class YahooFinance():
         if isinstance(ticker, list):
             if False in [True if isinstance(item, str) else False for item in ticker]:
                 raise ValueError("all tickers must be strings.")
-        self.ticker = ticker
-        self.interval = interval.lower()
-        self.range = range.lower()
-        self.data = None
+        self.__ticker = ticker
+        self.__interval = interval.lower()
+        self.__range = range.lower()
+        self.__data = None
 
     def info(self):
-        if isinstance(self.ticker, str):
-            data = info(((self.ticker, self.interval, self.range)))
-            self.data = data
-            return self.data
-        elif isinstance(self.ticker, list):
+        if isinstance(self.__ticker, str):
+            data = info(((self.__ticker, self.__interval, self.__range)))
+            self.__data = data
+            return self.__data
+        elif isinstance(self.__ticker, list):
             dataframes = []
             with Pool(cpu_count()) as pool:
-                for dataframe in tqdm(pool.imap_unordered(info, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False, ascii=' ━', colour='GREEN'):
+                for dataframe in tqdm(pool.imap_unordered(info, zip(self.__ticker, repeat(self.__interval), repeat(self.__range))), total=len(self.__ticker), leave=False, ascii=' ━', colour='GREEN'):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
             data = data.reset_index(drop=True)
-            self.data = data
+            self.__data = data
             return data
 
     def trading_period(self, type):
-        if isinstance(self.ticker, str):
-            data = trading_period((self.ticker, type.lower(), self.interval, self.range))
-            self.data = data
-            return self.data
-        if isinstance(self.ticker, list):
+        if isinstance(self.__ticker, str):
+            data = trading_period((self.__ticker, type.lower(), self.__interval, self.__range))
+            self.__data = data
+            return self.__data
+        if isinstance(self.__ticker, list):
             dataframes = []
             with Pool(cpu_count()) as pool:
-                for dataframe in tqdm(pool.imap_unordered(trading_period, zip(self.ticker, repeat(type), repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False, ascii=' ━', colour='GREEN'):
+                for dataframe in tqdm(pool.imap_unordered(trading_period, zip(self.__ticker, repeat(type), repeat(self.__interval), repeat(self.__range))), total=len(self.__ticker), leave=False, ascii=' ━', colour='GREEN'):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
             data = data.reset_index(drop=True)
-            self.data = data
+            self.__data = data
             return data
 
     def all_values(self):
-        if isinstance(self.ticker, str):
-            data = all_values(((self.ticker, self.interval, self.range)))
-            self.data = data
-            return self.data
-        elif isinstance(self.ticker, list):
+        if isinstance(self.__ticker, str):
+            data = all_values(((self.__ticker, self.__interval, self.__range)))
+            self.__data = data
+            return self.__data
+        elif isinstance(self.__ticker, list):
             dataframes = []
             with Pool(cpu_count()) as pool:
-                for dataframe in tqdm(pool.imap_unordered(all_values, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False, ascii=' ━', colour='GREEN'):
+                for dataframe in tqdm(pool.imap_unordered(all_values, zip(self.__ticker, repeat(self.__interval), repeat(self.__range))), total=len(self.__ticker), leave=False, ascii=' ━', colour='GREEN'):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
             data = data.reset_index(drop=True)
-            self.data = data
+            self.__data = data
             return data
 
     def close(self):
-        if isinstance(self.ticker, str):
-            data = close(((self.ticker, self.interval, self.range)))
-            self.data = data
-            return self.data
-        elif isinstance(self.ticker, list):
+        if isinstance(self.__ticker, str):
+            data = close(((self.__ticker, self.__interval, self.__range)))
+            self.__data = data
+            return self.__data
+        elif isinstance(self.__ticker, list):
             dataframes = []
             with Pool(cpu_count()) as pool:
-                for dataframe in tqdm(pool.imap_unordered(close, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False, ascii=' ━', colour='GREEN'):
+                for dataframe in tqdm(pool.imap_unordered(close, zip(self.__ticker, repeat(self.__interval), repeat(self.__range))), total=len(self.__ticker), leave=False, ascii=' ━', colour='GREEN'):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
             data = data.reset_index(drop=True)
-            self.data = data
+            self.__data = data
             return data
 
     def open(self):
-        if isinstance(self.ticker, str):
-            data = open(((self.ticker, self.interval, self.range)))
-            self.data = data
-            return self.data
-        elif isinstance(self.ticker, list):
+        if isinstance(self.__ticker, str):
+            data = open(((self.__ticker, self.__interval, self.__range)))
+            self.__data = data
+            return self.__data
+        elif isinstance(self.__ticker, list):
             dataframes = []
             with Pool(cpu_count()) as pool:
-                for dataframe in tqdm(pool.imap_unordered(open, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False, ascii=' ━', colour='GREEN'):
+                for dataframe in tqdm(pool.imap_unordered(open, zip(self.__ticker, repeat(self.__interval), repeat(self.__range))), total=len(self.__ticker), leave=False, ascii=' ━', colour='GREEN'):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
             data = data.reset_index(drop=True)
-            self.data = data
+            self.__data = data
             return data
 
     def high(self):
-        if isinstance(self.ticker, str):
-            data = high(((self.ticker, self.interval, self.range)))
-            self.data = data
-            return self.data
-        elif isinstance(self.ticker, list):
+        if isinstance(self.__ticker, str):
+            data = high(((self.__ticker, self.__interval, self.__range)))
+            self.__data = data
+            return self.__data
+        elif isinstance(self.__ticker, list):
             dataframes = []
             with Pool(cpu_count()) as pool:
-                for dataframe in tqdm(pool.imap_unordered(high, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False, ascii=' ━', colour='GREEN'):
+                for dataframe in tqdm(pool.imap_unordered(high, zip(self.__ticker, repeat(self.__interval), repeat(self.__range))), total=len(self.__ticker), leave=False, ascii=' ━', colour='GREEN'):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
             data = data.reset_index(drop=True)
-            self.data = data
+            self.__data = data
             return data
 
     def low(self):
-        if isinstance(self.ticker, str):
-            data = low(((self.ticker, self.interval, self.range)))
-            self.data = data
-            return self.data
-        elif isinstance(self.ticker, list):
+        if isinstance(self.__ticker, str):
+            data = low(((self.__ticker, self.__interval, self.__range)))
+            self.__data = data
+            return self.__data
+        elif isinstance(self.__ticker, list):
             dataframes = []
             with Pool(cpu_count()) as pool:
-                for dataframe in tqdm(pool.imap_unordered(low, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False, ascii=' ━', colour='GREEN'):
+                for dataframe in tqdm(pool.imap_unordered(low, zip(self.__ticker, repeat(self.__interval), repeat(self.__range))), total=len(self.__ticker), leave=False, ascii=' ━', colour='GREEN'):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
             data = data.reset_index(drop=True)
-            self.data = data
+            self.__data = data
             return data
 
     def volume(self):
-        if isinstance(self.ticker, str):
-            data = volume(((self.ticker, self.interval, self.range)))
-            self.data = data
-            return self.data
-        elif isinstance(self.ticker, list):
+        if isinstance(self.__ticker, str):
+            data = volume(((self.__ticker, self.__interval, self.__range)))
+            self.__data = data
+            return self.__data
+        elif isinstance(self.__ticker, list):
             dataframes = []
             with Pool(cpu_count()) as pool:
-                for dataframe in tqdm(pool.imap_unordered(volume, zip(self.ticker, repeat(self.interval), repeat(self.range))), total=len(self.ticker), leave=False, ascii=' ━', colour='GREEN'):
+                for dataframe in tqdm(pool.imap_unordered(volume, zip(self.__ticker, repeat(self.__interval), repeat(self.__range))), total=len(self.__ticker), leave=False, ascii=' ━', colour='GREEN'):
                     dataframes.append(dataframe)
             data = pd.concat(dataframes)
             data = data.reset_index(drop=True)
-            self.data = data
+            self.__data = data
             return data
 
     def to_csv(self, dir='database.csv', sep=';'):
-        if isinstance(self.data, pd.DataFrame):
+        if isinstance(self.__data, pd.DataFrame):
             if dir != 'database.csv':
                 if not '.csv' in dir[-4:]:
                     dir += '.csv'
-            self.data.to_csv(dir, sep=sep, index=None)
+            self.__data.to_csv(dir, sep=sep, index=None)
         else:
             raise NothingToExport('No data found to export')
 
     def to_excel(self, dir='database.xlsx', sep=';'):
-        if isinstance(self.data, pd.DataFrame):
+        if isinstance(self.__data, pd.DataFrame):
             if dir != 'database.xlsx':
                 if not '.xlsx' in dir[-4:]:
                     dir += '.xlsx'
                 else:
                     dir = dir
-            self.data.to_excel(dir, index=None)
+            self.__data.to_excel(dir, index=None)
         else:
             raise NothingToExport('No data found to export')
 
